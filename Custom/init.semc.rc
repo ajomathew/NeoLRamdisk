@@ -40,9 +40,10 @@ on post-fs
 
     # Re-mount as read-only
     mount yaffs2 mtd@appslog /system/vendor ro remount
-    mount yaffs2 mtd@system /system ro remount
 
 on early-boot
+    # Boot into recovery
+    exec /sbin/bootrec
     # Start the offline charging (This blocks booting further in some cases)
     exec /system/bin/chargemon
 
