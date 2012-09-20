@@ -1,9 +1,6 @@
 Ramdisk Neo L Kernel
 --------------------
-kernel.sin-ramdisk(Modified)- Commits should happen here
-* Filler added
-* Bootable
+Custom - Commits should happen here
 
-kernel.sin-ramdisk-Stock(for Reference)- is for reference
-* Simply Stock Ramdisk
+Stock - For reference
 
