@@ -1,0 +1,35 @@
+#!/system/xbin/sh
+	/system/bin/charger
+	cat /dev/input/event2 > /dev/keycheck&
+	sleep 3
+	kill -9 $!
+	if [ -s /dev/keycheck -o -e /cache/recovery/boot ]
+	then
+	# fixing CPU clocks to avoid issues in recovery
+	echo 1024000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_max_freq
+	echo 245000 > /sys/devices/system/cpu/cpu0/cpufreq/scaling_min_freq
+	rm /cache/recovery/boot
+	# remount rootfs rw
+	mount -o remount,rw rootfs /
+
+	# Umount MTDs
+	umount -l /dev/block/mtdblock1
+	umount -l /dev/block/mtdblock2
+	umount -l /dev/block/mtdblock3
+
+	# Mount recovery partition
+	cd /
+	rm -r /sbin /sdcard
+	rm -f etc init* uevent* default*
+	if [ -f /system/bin/recovery.tar ]
+	then
+		tar -xf /system/bin/recovery.tar
+	fi
+
+	# Umount /system
+	umount -l /dev/block/mtdblock0
+
+	# chroot
+	chroot / /init
+
+	fi

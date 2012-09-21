@@ -1,0 +1,15 @@
+#!/data/local/tmp/sh
+echo installing ClockWorkMod Recovery 5.0.2.6
+mount -o remount rw /system
+cp /data/local/tmp/recovery.tar /system/bin/recovery.tar
+cp /data/local/tmp/sh /system/xbin/sh
+if [ -f /system/bin/charger ]
+	then
+	echo charger exist . . .
+	else
+	mv /system/bin/chargemon /system/bin/charger
+fi
+cp /data/local/tmp/chargemon /system/bin/chargemon
+chmod 644 /system/bin/recovery.tar
+chmod 755 /system/bin/chargemon /system/xbin/sh
+mount -o remount ro /system
